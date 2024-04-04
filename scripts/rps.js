@@ -15,41 +15,28 @@ function playRound(playerSelection, computerSelection, playerScore, compScore) {
         console.log("Draw!");
         return [playerScore, compScore]
     }
-    let result;
+    let playerWon = false;
     switch (playerSelection) {
         case "rock":
-            result =
-                computerSelection === "scissors"
-                    ? "You win this round!"
-                    : "You lost this round!";
-            break;
-
+            playerWon = computerSelection === "scissors" 
+        break;
         case "paper":
-            result =
-                computerSelection === "rock"
-                    ? "You win this round!"
-                    : "You lost this round!";
-            break;
-
+            playerWon = computerSelection === "rock"
+        break;
         case "scissors":
-            result =
-                computerSelection === "paper"
-                    ? "You win this round!"
-                    : "You lost this round!";
-            break;
-
+            playerWon = computerSelection === "paper"
+        break;
         default:
-            result = "Invalid Choice!";
-            break;
+        break;
     }
-    if (result === "You win this round!") {
+    if (playerWon) {
         playerScore++;
-        console.log("Point to you!")
-    } else if (result === "You lost this round!"){
+        console.log("player won this round")
+    } else {
         compScore++;
-        console.log("Point to computer!")
+        console.log("comp won this round")
     }
-    console.log(result);
+    console.log(`Player: ${playerScore}, Comp: ${compScore}`)
     return [playerScore, compScore]
 }
 
