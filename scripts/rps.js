@@ -1,77 +1,59 @@
-console.log("Welcome to Rock Paper Scissors.");
-
 function getComputerChoice() {
     let choices = ["rock", "paper", "scissors"];
     return choices[Math.floor(Math.random() * choices.length)];
 }
 
-function getPlayerChoice() {
-    return prompt("Rock, paper or scissors: ").toLowerCase();
-}
+let compScore = 0;
+let playerScore = 0;
 
-function playRound(playerSelection, computerSelection, playerScore, compScore) {
+function playRound(playerSelection, computerSelection) {
     // Check for draw
+    const compChoice = document.getElementById("compChoice");
+    compChoice.textContent = `Computer chose : ${computerSelection}!`;
+    const roundResult = document.getElementById("roundResult");
+    const playerScoreLi = document.getElementById("playerScore");
+    const compScoreLi = document.getElementById("compScore");
     if (playerSelection === computerSelection) {
-        console.log("Draw!");
-        return [playerScore, compScore]
+        roundResult.textContent = "Draw!";
+        playerScoreLi.textContent = playerScore;
+        compScoreLi.textContent = compScore;
+        return;
     }
-    let result;
+    let playerWon = false;
     switch (playerSelection) {
         case "rock":
-            result =
-                computerSelection === "scissors"
-                    ? "You win this round!"
-                    : "You lost this round!";
+            playerWon = computerSelection === "scissors";
             break;
-
         case "paper":
-            result =
-                computerSelection === "rock"
-                    ? "You win this round!"
-                    : "You lost this round!";
+            playerWon = computerSelection === "rock";
             break;
-
         case "scissors":
-            result =
-                computerSelection === "paper"
-                    ? "You win this round!"
-                    : "You lost this round!";
+            playerWon = computerSelection === "paper";
             break;
-
         default:
-            result = "Invalid Choice!";
             break;
     }
-    if (result === "You win this round!") {
+    if (playerWon) {
         playerScore++;
-        console.log("Point to you!")
-    } else if (result === "You lost this round!"){
-        compScore++;
-        console.log("Point to computer!")
-    }
-    console.log(result);
-    return [playerScore, compScore]
-}
-
-function playGame() {
-    let playerscore = 0;
-    let compscore = 0;
-    for (let i = 0; i < 5; i++) {
-        let player = getPlayerChoice();
-        let comp = getComputerChoice();
-        let results = playRound(player, comp, playerscore, compscore);
-        playerscore = results[0];
-        compscore = results[1];
-    }
-
-    if (playerscore > compscore) {
-        console.log("You won the game!")
-    } else if (playerscore === compscore) {
-        console.log("You drawed the game!")
+        roundResult.textContent = "Player won this round!";
     } else {
-        console.log("You lost the game!")
+        compScore++;
+        roundResult.textContent = "Computer won this round!";
     }
-    console.log(`The scores were: Player: ${playerscore} Computer: ${compscore}`)
+    playerScoreLi.textContent = playerScore;
+    compScoreLi.textContent = compScore;
+    // Once a player reaches score of 5, announce their win
+    if (playerScore === 5 || compScore === 5) {
+        let winner = playerScore > compScore ? "Player" : "Computer";
+        roundResult.textContent = `${winner} has won the game!\nSelect another choice to continue another game.`;
+        playerScore = 0;
+        compScore = 0;
+    }
 }
 
-playGame();
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playRound(button.id, getComputerChoice());
+    });
+});
