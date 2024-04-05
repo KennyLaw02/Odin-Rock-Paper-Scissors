@@ -7,7 +7,18 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <p>Open the console :)</p>
+        <p>Console will contain logs</p>
+        <div id="scoreTable">
+            <p id="compChoice">Computer awaits your choice.</p>
+            <p id="roundResult">Let's Play!</p>
+            <ul>
+                <li>Player Score: <span id="playerScore">0</span></li>
+                <li>Computer Score: <span id="compScore">0</span></li>
+            </ul>
+        </div>
+        <button type="button" id="rock">Rock</button>
+        <button type="button" id="paper">Paper</button>
+        <button type="button" id="scissors">Scissors</button>
         <script src="scripts/rps.js"></script>
     </body>
 </html>
